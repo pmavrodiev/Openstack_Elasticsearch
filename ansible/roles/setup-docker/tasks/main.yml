@@ -8,21 +8,27 @@
       become: yes
 
 
-    - name: Add the elasticsearch group
-      group:
-        name={{elastic_user}}
-        state=present
-      become_method: sudo
-      become: yes
+#    - name: Add the elasticsearch group gid 9999
+#      group:
+#        name={{elastic_user}}
+#        state=present
+#        gid=9999
+#      become_method: sudo
+#      become: yes
 
 
-    - name: Create elasticsearch user
-      user:
-        name={{elastic_user}}
-        uid=10000
-        groups={{elastic_user}},docker
-      become_method: sudo
-      become: yes
+#   - name: Create elasticsearch user
+#     user:
+#       name={{elastic_user}}
+#       uid=9999
+#        groups={{elastic_user}},docker
+#      become_method: sudo
+#      become: yes
+
+#    - name: Set primary group for the elasticsearch user
+#      command: usermod -g {{elastic_user}} {{elastic_user}}
+#      become_method: sudo
+#      become: yes
 
     - name: Install Docker
       yum:
@@ -40,22 +46,22 @@
       become: yes
 
 
-    - name: Setting up "/home/elasticsearch/docker"
+    - name: Setting up "/root/elasticsearch/docker"
       file:
-        path=/home/{{elastic_user}}/docker
+        path=/root/{{elastic_user}}/docker
         state=directory
-        owner={{elastic_user}}
-        group={{elastic_user}}
+        owner=root
+        group=root
       become_method: sudo
       become: yes
 
 
     - name: Copying Dockerfile
       copy:
-        src=../../../Dockerfile
-        dest=/home/{{elastic_user}}/docker/Dockerfile
-        owner={{elastic_user}}
-        group={{elastic_user}}
+        src=../../../elasticsearch/Dockerfile
+        dest=/root/{{elastic_user}}/docker/Dockerfile
+        owner=root
+        group=root
         mode=0744
       become_method: sudo
       become: yes
@@ -63,10 +69,20 @@
 
     - name: Copying Docker entry point
       copy:
-        src=../../../docker-entrypoint.sh
-        dest=/home/{{elastic_user}}/docker/docker-entrypoint.sh
-        owner={{elastic_user}}
-        group={{elastic_user}}
+        src=../../../elasticsearch/docker-entrypoint.sh
+        dest=/root/{{elastic_user}}/docker/docker-entrypoint.sh
+        owner=root
+        group=root
+        mode=0744
+      become_method: sudo
+      become: yes
+
+    - name: Copying elasticsearch run script
+      copy:
+        src=../../../elasticsearch/run-elasticsearch.sh
+        dest=/root/{{elastic_user}}/docker/run-elasticsearch.sh
+        owner=root
+        group=root
         mode=0744
       become_method: sudo
       become: yes

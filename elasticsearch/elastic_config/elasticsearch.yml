@@ -30,11 +30,11 @@ node.name: wintermute-1
 #
 # Path to directory where to store the data (separate multiple locations by comma):
 #
-path.data: /usr/share/elasticsearch/data
+path.data: /root/elasticsearch/data
 #
 # Path to log files:
 #
-path.logs: /usr/share/elasticsearch/logs
+path.logs: /root/elasticsearch/logs
 #
 # ----------------------------------- Memory -----------------------------------
 #

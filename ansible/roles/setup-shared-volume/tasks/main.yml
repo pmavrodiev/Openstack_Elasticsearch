@@ -1,50 +1,50 @@
 ---
-    - name: Setting up "/home/{{elastic_user}}/data"
+    - name: Setting up "/root/{{elastic_user}}/data"
       file:
-        path=/home/{{elastic_user}}/data
+        path=/root/{{elastic_user}}/data
         state=directory
-        owner={{elastic_user}}
-        group={{elastic_user}}
+        owner=root
+        group=root
       become_method: sudo
       become: yes
 
 
 
-    - name: Setting up "/home/{{elastic_user}}/logs"
+    - name: Setting up "/root/{{elastic_user}}/logs"
       file:
-        path=/home/{{elastic_user}}/logs
+        path=/root/{{elastic_user}}/logs
         state=directory
-        owner={{elastic_user}}
-        group={{elastic_user}}
+        owner=root
+        group=root
       become_method: sudo
       become: yes
 
-    - name: Setting up "/home/{{elastic_user}}/config"
+    - name: Setting up "/root/{{elastic_user}}/config"
       file:
-        path=/home/{{elastic_user}}/config
+        path=/root/{{elastic_user}}/config
         state=directory
-        owner={{elastic_user}}
-        group={{elastic_user}}
+        owner=root
+        group=root
 
       become_method: sudo
       become: yes
 
     - name: Copying "config/elasticsearch.yml"
       copy:
-        src=../../../elastic_config/elasticsearch.yml
-        dest=/home/{{elastic_user}}/config/elasticsearch.yml
-        owner={{elastic_user}}
-        group={{elastic_user}}
+        src=../../../elasticsearch/elastic_config/elasticsearch.yml
+        dest=/root/{{elastic_user}}/config/elasticsearch.yml
+        owner=root
+        group=root
         mode=0744
       become_method: sudo
       become: yes
 
     - name: Copying "config/logging.yml"
       copy:
-        src=../../../elastic_config/logging.yml
-        dest=/home/{{elastic_user}}/logs/logging.yml
-        owner={{elastic_user}}
-        group={{elastic_user}}
+        src=../../../elasticsearch/elastic_config/logging.yml
+        dest=/root/{{elastic_user}}/config/logging.yml
+        owner=root
+        group=root
         mode=0744
       become_method: sudo
       become: yes

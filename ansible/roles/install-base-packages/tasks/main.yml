@@ -12,3 +12,10 @@
         state=latest
       become_method: sudo
       become: yes
+
+    - name: Disable SELinux
+      selinux:
+        state=disabled
+      become_method: sudo
+      become: yes
+
