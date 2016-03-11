@@ -1,0 +1,14 @@
+---
+    - name: Running yum upgrade
+      yum:
+        name=*
+        state=latest
+      become_method: sudo
+      become: yes
+
+    - name: Install wget
+      yum:
+        name=wget
+        state=latest
+      become_method: sudo
+      become: yes

@@ -1,0 +1,21 @@
+---
+
+
+- name: Provision Instance
+  hosts: srv
+  remote_user: "{{remote_user}}"
+  roles:
+    - install-base-packages
+
+- name: Setting up Docker
+  hosts: srv
+  remote_user: "{{remote_user}}"
+  roles:
+    - setup-docker
+
+- name: Setting up shared volumes
+  hosts: srv
+  remote_user: "{{remote_user}}"
+  roles:
+    - setup-shared-volume
+

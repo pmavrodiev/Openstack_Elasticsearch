@@ -1,0 +1,72 @@
+---
+
+    - name: Add the Docker group
+      group:
+        name=docker
+        state=present
+      become_method: sudo
+      become: yes
+
+
+    - name: Add the elasticsearch group
+      group:
+        name={{elastic_user}}
+        state=present
+      become_method: sudo
+      become: yes
+
+
+    - name: Create elasticsearch user
+      user:
+        name={{elastic_user}}
+        uid=10000
+        groups={{elastic_user}},docker
+      become_method: sudo
+      become: yes
+
+    - name: Install Docker
+      yum:
+        name=docker
+        state=latest
+      become_method: sudo
+      become: yes
+
+    - name: Start the Docker daemon
+      service:
+        name=docker
+        state=started
+        enabled=yes
+      become_method: sudo
+      become: yes
+
+
+    - name: Setting up "/home/elasticsearch/docker"
+      file:
+        path=/home/{{elastic_user}}/docker
+        state=directory
+        owner={{elastic_user}}
+        group={{elastic_user}}
+      become_method: sudo
+      become: yes
+
+
+    - name: Copying Dockerfile
+      copy:
+        src=../../../Dockerfile
+        dest=/home/{{elastic_user}}/docker/Dockerfile
+        owner={{elastic_user}}
+        group={{elastic_user}}
+        mode=0744
+      become_method: sudo
+      become: yes
+
+
+    - name: Copying Docker entry point
+      copy:
+        src=../../../docker-entrypoint.sh
+        dest=/home/{{elastic_user}}/docker/docker-entrypoint.sh
+        owner={{elastic_user}}
+        group={{elastic_user}}
+        mode=0744
+      become_method: sudo
+      become: yes
